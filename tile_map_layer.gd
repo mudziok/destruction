@@ -1,6 +1,7 @@
 extends TileMapLayer
 
 signal map_cleared()
+signal add_destruction_points(points, color)
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
 
@@ -149,7 +150,6 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	$"../Gimball/Label2".text = "%.02f" % $DestroyTimer.time_left
-	pass
 
 func _on_timer_timeout() -> void:
 	for i in range(5):

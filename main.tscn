@@ -1,12 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://csn00pe8lksd6"]
+[gd_scene load_steps=5 format=3 uid="uid://csn00pe8lksd6"]
 
 [ext_resource type="PackedScene" uid="uid://ddr44wetit1rm" path="res://game.tscn" id="1_0eiag"]
-[ext_resource type="Shader" path="res://main.gdshader" id="1_xonfd"]
+[ext_resource type="Shader" path="res://ui.gdshader" id="2_br3mh"]
+[ext_resource type="PackedScene" uid="uid://cfmytruokew5u" path="res://scenes/ui.tscn" id="2_r0cj6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_46xkr"]
-shader = ExtResource("1_xonfd")
-shader_parameter/FILTER_GAMMA = 1.0
-shader_parameter/COLOR_GAMMA = 1.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8viwh"]
+shader = ExtResource("2_br3mh")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -17,8 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-texture_filter = 2
-material = SubResource("ShaderMaterial_46xkr")
+texture_filter = 1
 layout_mode = 0
 offset_right = 288.0
 offset_bottom = 162.0
@@ -31,3 +30,24 @@ size = Vector2i(288, 162)
 render_target_update_mode = 4
 
 [node name="Game" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_0eiag")]
+
+[node name="UIViewport" type="SubViewportContainer" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_8viwh")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="UIViewport"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(288, 162)
+render_target_update_mode = 4
+
+[node name="UI" parent="UIViewport/SubViewport" instance=ExtResource("2_r0cj6")]
+
+[connection signal="round_start" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_round_start"]
+[connection signal="round_won" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_round_won"]
+[connection signal="bomb_timeout" from="UIViewport/SubViewport/UI" to="SubViewportContainer/SubViewport/Game" method="_on_ui_bomb_timeout"]

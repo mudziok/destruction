@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddr44wetit1rm"]
+[gd_scene load_steps=9 format=3 uid="uid://ddr44wetit1rm"]
 
 [ext_resource type="Script" path="res://round_manager.gd" id="1_0s2bx"]
 [ext_resource type="Texture2D" uid="uid://daveui1y4amdc" path="res://sprites/houses_dark_windows.png" id="1_4q1uc"]
 [ext_resource type="Texture2D" uid="uid://dyfqgrwhn3wdp" path="res://sprites/bg.png" id="1_nvdk8"]
+[ext_resource type="Script" path="res://game.gd" id="1_vxhlw"]
 [ext_resource type="Script" path="res://tile_map_layer.gd" id="2_6rhak"]
 [ext_resource type="Script" path="res://gimball.gd" id="4_drhe8"]
 
@@ -27,6 +28,7 @@ tile_layout = 1
 sources/1 = SubResource("TileSetAtlasSource_hkfhx")
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_vxhlw")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
@@ -62,14 +64,6 @@ one_shot = true
 script = ExtResource("4_drhe8")
 
 [node name="Camera2D" type="Camera2D" parent="Gimball"]
-zoom = Vector2(3, 3)
-
-[node name="Label" type="Label" parent="Gimball"]
-offset_left = -118.0
-offset_top = -64.0
-offset_right = -78.0
-offset_bottom = -41.0
-text = "0:00"
 
 [node name="Label2" type="Label" parent="Gimball"]
 offset_left = -123.0
@@ -79,6 +73,17 @@ offset_bottom = 67.0
 text = "0:00
 "
 
+[node name="DestructionPoints" type="ProgressBar" parent="Gimball"]
+offset_left = -91.0
+offset_top = -35.0
+offset_right = -81.0
+offset_bottom = 45.0
+value = 10.0
+fill_mode = 3
+show_percentage = false
+
+[connection signal="round_won" from="RoundManager" to="." method="_on_round_manager_round_won"]
+[connection signal="start_round" from="RoundManager" to="." method="_on_round_manager_start_round"]
 [connection signal="start_round" from="RoundManager" to="Map" method="_on_round_manager_start_round"]
 [connection signal="map_cleared" from="Map" to="RoundManager" method="_on_map_map_cleared"]
 [connection signal="timeout" from="Map/Timer" to="Map" method="_on_timer_timeout"]
