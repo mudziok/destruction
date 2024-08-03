@@ -1,15 +1,16 @@
 [gd_scene load_steps=5 format=4 uid="uid://ddr44wetit1rm"]
 
-[ext_resource type="Texture2D" uid="uid://bg7t0fbendki3" path="res://sprites/houses.png" id="1_y0o57"]
+[ext_resource type="Texture2D" uid="uid://daveui1y4amdc" path="res://sprites/houses_dark_windows.png" id="1_4q1uc"]
 [ext_resource type="Script" path="res://tile_map_layer.gd" id="2_6rhak"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hkfhx"]
-texture = ExtResource("1_y0o57")
+texture = ExtResource("1_4q1uc")
 texture_region_size = Vector2i(16, 24)
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
+4:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_g3aor"]
 tile_shape = 1
