@@ -66,11 +66,9 @@ func get_surroundings_of_color(starting_cell: Vector2i):
 	var currently_visited_level = []
 	
 	var starting_atlas_coords = get_cell_atlas_coords(starting_cell)
-	var level = 0
 	
 	while queue.size() > 0:
 		var level_size = queue.size()
-		print(level_size)
 		for i in range(level_size):
 			var cell = queue.pop_front()
 			var atlas_coords = get_cell_atlas_coords(cell)
