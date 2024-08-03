@@ -105,6 +105,9 @@ func _input(event: InputEvent) -> void:
 		var groups = get_surroundings_of_color(removed_cell)
 		
 		for group in groups:
+			mark_for_deletion_cells.append_array(group)
+		
+		for group in groups:
 			await get_tree().process_frame
 			await get_tree().process_frame
 			await get_tree().process_frame
@@ -112,6 +115,7 @@ func _input(event: InputEvent) -> void:
 			await get_tree().process_frame
 			for cell in group:
 				erase_cell(cell)
+				mark_for_deletion_cells.erase(cell)
 
 func _process(delta: float) -> void:
 	pass
