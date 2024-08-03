@@ -1,0 +1,120 @@
+[gd_scene load_steps=20 format=3 uid="uid://ccxepqomjwcel"]
+
+[ext_resource type="Texture2D" uid="uid://cbs7jeng58tmh" path="res://boom.png" id="1_bm67g"]
+[ext_resource type="Shader" path="res://scenes/explosion.gdshader" id="1_qynw2"]
+[ext_resource type="Script" path="res://scenes/explosion.gd" id="2_w0of6"]
+
+[sub_resource type="Gradient" id="Gradient_p61os"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.583942, 0.791971, 0.912409)
+colors = PackedColorArray(0.273, 0.34905, 0.78, 1, 0.439216, 0.709804, 0.933333, 1, 0.737255, 0.92549, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wkpqn"]
+gradient = SubResource("Gradient_p61os")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5k4si"]
+resource_local_to_scene = true
+shader = ExtResource("1_qynw2")
+shader_parameter/palette = SubResource("GradientTexture1D_wkpqn")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elvvb"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iku1o"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(100, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngdru"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(200, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_km0fc"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(300, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0x7lf"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(400, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yhnk"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(500, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ogx4c"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(600, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj8hj"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(700, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxldc"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(800, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6111u"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(900, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50o2w"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(1000, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1vvf"]
+atlas = ExtResource("1_bm67g")
+region = Rect2(1100, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8htwc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elvvb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iku1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngdru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_km0fc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0x7lf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yhnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ogx4c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj8hj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxldc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6111u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50o2w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1vvf")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Explosion" type="AnimatedSprite2D"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_5k4si")
+position = Vector2(-24, -24)
+sprite_frames = SubResource("SpriteFrames_8htwc")
+offset = Vector2(-1, -5)
+script = ExtResource("2_w0of6")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

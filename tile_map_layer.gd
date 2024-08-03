@@ -1,5 +1,7 @@
 extends TileMapLayer
 
+var explosion_scene = preload("res://scenes/explosion.tscn")
+
 func get_points_in_radius(center: Vector2i, radius: float) -> Array:
 	var points_in_radius = []
 	var min_x = int((center.x - radius))
@@ -27,7 +29,7 @@ func generate_city(radius: int) -> void:
 	roots.shuffle()
 	
 	for cell in roots.slice(0, roots.size() * fill_percent):
-		var color = [0,1,2,3].pick_random()
+		var color = [0,1,2,3,4].pick_random()
 		set_cell(cell, 1, Vector2i(color, 0))
 	
 	for i in range(200):
@@ -35,8 +37,7 @@ func generate_city(radius: int) -> void:
 
 func _ready() -> void:
 	randomize()
-	generate_city(10)
-
+	#generate_city(10)
 
 func grow() -> void:
 	var used_cells = get_used_cells()
@@ -84,17 +85,6 @@ func get_surroundings_of_color(starting_cell: Vector2i):
 	
 	return visited_levels
 
-func get_average(cells: Array):
-	var x = 0
-	var y = 0
-	var size = cells.size()
-	
-	for c in cells:
-		x += c.x
-		y += c.y
-		
-	return Vector2i(int(x / size), int(y / size))
-	
 var mark_for_deletion_cells = []
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("restart"):
@@ -114,8 +104,14 @@ func _input(event: InputEvent) -> void:
 			await get_tree().process_frame
 			await get_tree().process_frame
 			for cell in group:
-				erase_cell(cell)
-				mark_for_deletion_cells.erase(cell)
+				var explosion = explosion_scene.instantiate()
+				var color = get_cell_atlas_coords(cell).x
+				if color != -1:
+					add_child(explosion)
+					explosion.position = map_to_local(cell)
+					explosion.set_palette(color)
+					erase_cell(cell)
+					mark_for_deletion_cells.erase(cell)
 
 func _process(delta: float) -> void:
 	pass

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b63y4ngl3w7fn"
-path="res://.godot/imported/houses-export.png-5623080bd61f583dbfa5b80dad32f6cf.ctex"
+uid="uid://ldsw7bpmogg3"
+path="res://.godot/imported/pink_palette.png-cbcd287f886e6a3286acf080eff62a8c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/houses-export.png"
-dest_files=["res://.godot/imported/houses-export.png-5623080bd61f583dbfa5b80dad32f6cf.ctex"]
+source_file="res://sprites/pink_palette.png"
+dest_files=["res://.godot/imported/pink_palette.png-cbcd287f886e6a3286acf080eff62a8c.ctex"]
 
 [params]
 
