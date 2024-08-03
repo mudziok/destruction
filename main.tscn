@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://csn00pe8lksd6"]
+
+[ext_resource type="PackedScene" uid="uid://ddr44wetit1rm" path="res://game.tscn" id="1_0eiag"]
+[ext_resource type="Shader" path="res://main.gdshader" id="1_xonfd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_46xkr"]
+shader = ExtResource("1_xonfd")
+shader_parameter/FILTER_GAMMA = 1.0
+shader_parameter/COLOR_GAMMA = 1.0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 2
+material = SubResource("ShaderMaterial_46xkr")
+layout_mode = 0
+offset_right = 288.0
+offset_bottom = 162.0
+scale = Vector2(4, 4)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(288, 162)
+render_target_update_mode = 4
+
+[node name="Game" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_0eiag")]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=4 uid="uid://ddr44wetit1rm"]
+
+[ext_resource type="Texture2D" uid="uid://bg7t0fbendki3" path="res://sprites/houses.png" id="1_y0o57"]
+[ext_resource type="Script" path="res://tile_map_layer.gd" id="2_6rhak"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hkfhx"]
+texture = ExtResource("1_y0o57")
+texture_region_size = Vector2i(16, 24)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_g3aor"]
+tile_shape = 1
+sources/1 = SubResource("TileSetAtlasSource_hkfhx")
+
+[node name="Game" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+texture_filter = 1
+tile_map_data = PackedByteArray("AAD+////AQAAAAAAAAD/////AQABAAAAAAAAAP//AQACAAAAAAABAP//AQADAAAAAAD///7/AQADAAAAAAAAAP7/AQADAAAAAAABAP7/AQACAAAAAAD9//r/AQACAAAAAAD6/wMAAQACAAAAAAACAPr/AQACAAAAAAAAAAMAAQACAAAAAAAIAAYAAQACAAAAAAAGAP3/AQACAAAAAAAEAAEAAQACAAAAAAAEAPn/AQACAAAAAAD+//j/AQACAAAAAAACAAMAAQACAAAAAAD9/wAAAQACAAAAAAD8/wMAAQABAAAAAAAAAAUAAQABAAAAAAAAAPr/AQABAAAAAAD6//z/AQABAAAAAAD6//7/AQABAAAAAAD8//z/AQABAAAAAAAEAPz/AQABAAAAAAAFAAcAAQABAAAAAAAIAAIAAQABAAAAAAAIAAEAAQABAAAAAAAIAPf/AQABAAAAAAD7//X/AQABAAAAAAD4////AQABAAAAAAD+/wgAAQADAAAAAAD7/wEAAQADAAAAAAD9//7/AQADAAAAAAD7//r/AQADAAAAAAD///b/AQADAAAAAAACAPf/AQADAAAAAAAEAP3/AQADAAAAAAAGAPn/AQADAAAAAAAHAP3/AQADAAAAAAAFAAMAAQADAAAAAAADAAcAAQADAAAAAAACAAYAAQAAAAAAAAACAP//AQAAAAAAAAADAAAAAQAAAAAAAAAFAAQAAQAAAAAAAAAHAAAAAQAAAAAAAAAGAP//AQAAAAAAAAAEAPv/AQAAAAAAAAD///f/AQAAAAAAAAD9//v/AQAAAAAAAAD7////AQAAAAAAAAD9/wMAAQAAAAAAAAD7/wUAAQAAAAAAAAD7/wQAAQAAAAAAAAD6/wUAAQAAAAAAAAD6/wYAAQAAAAAAAAD6/wcAAQAAAAAAAAD7/wYAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_g3aor")
+script = ExtResource("2_6rhak")
+
+[node name="Timer" type="Timer" parent="TileMapLayer"]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="TileMapLayer/Timer" to="TileMapLayer" method="_on_timer_timeout"]
