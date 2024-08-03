@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://ddr44wetit1rm"]
+[gd_scene load_steps=8 format=3 uid="uid://ddr44wetit1rm"]
 
+[ext_resource type="Script" path="res://round_manager.gd" id="1_0s2bx"]
 [ext_resource type="Texture2D" uid="uid://daveui1y4amdc" path="res://sprites/houses_dark_windows.png" id="1_4q1uc"]
+[ext_resource type="Texture2D" uid="uid://dyfqgrwhn3wdp" path="res://sprites/bg.png" id="1_nvdk8"]
 [ext_resource type="Script" path="res://tile_map_layer.gd" id="2_6rhak"]
+[ext_resource type="Script" path="res://gimball.gd" id="4_drhe8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hkfhx"]
 texture = ExtResource("1_4q1uc")
@@ -12,25 +15,71 @@ use_texture_padding = false
 2:0/0 = 0
 3:0/0 = 0
 4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+3:1/0 = 0
+2:1/0 = 0
+4:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_g3aor"]
 tile_shape = 1
+tile_layout = 1
 sources/1 = SubResource("TileSetAtlasSource_hkfhx")
 
 [node name="Game" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = -72.0
+offset_top = -44.0
+offset_right = 98.0
+offset_bottom = 58.0
+texture = ExtResource("1_nvdk8")
+stretch_mode = 1
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="RoundManager" type="Node" parent="."]
+script = ExtResource("1_0s2bx")
+
+[node name="RoundTimer" type="Timer" parent="RoundManager"]
+wait_time = 60.0
+
+[node name="Map" type="TileMapLayer" parent="."]
 y_sort_enabled = true
 texture_filter = 1
-tile_map_data = PackedByteArray("AAD+//v/AQAAAAAAAAD+////AQABAAAAAAAAAP3/AQABAAAAAAAAAAEAAQABAAAAAAD+//z/AQACAAAAAAAAAPv/AQACAAAAAAAAAP7/AQACAAAAAAA=")
+tile_map_data = PackedByteArray(0, 0, 255, 255, 254, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_g3aor")
 script = ExtResource("2_6rhak")
 
-[node name="Timer" type="Timer" parent="TileMapLayer"]
+[node name="Timer" type="Timer" parent="Map"]
 wait_time = 0.1
 autostart = true
 
-[connection signal="timeout" from="TileMapLayer/Timer" to="TileMapLayer" method="_on_timer_timeout"]
+[node name="DestroyTimer" type="Timer" parent="Map"]
+wait_time = 1.5
+one_shot = true
+
+[node name="Gimball" type="Node2D" parent="."]
+script = ExtResource("4_drhe8")
+
+[node name="Camera2D" type="Camera2D" parent="Gimball"]
+zoom = Vector2(3, 3)
+
+[node name="Label" type="Label" parent="Gimball"]
+offset_left = -118.0
+offset_top = -64.0
+offset_right = -78.0
+offset_bottom = -41.0
+text = "0:00"
+
+[node name="Label2" type="Label" parent="Gimball"]
+offset_left = -123.0
+offset_top = 44.0
+offset_right = -83.0
+offset_bottom = 67.0
+text = "0:00
+"
+
+[connection signal="start_round" from="RoundManager" to="Map" method="_on_round_manager_start_round"]
+[connection signal="map_cleared" from="Map" to="RoundManager" method="_on_map_map_cleared"]
+[connection signal="timeout" from="Map/Timer" to="Map" method="_on_timer_timeout"]
+[connection signal="timeout" from="Map/DestroyTimer" to="Map" method="_on_destroy_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ccxepqomjwcel"]
+[gd_scene load_steps=19 format=3 uid="uid://ccxepqomjwcel"]
 
 [ext_resource type="Texture2D" uid="uid://cbs7jeng58tmh" path="res://boom.png" id="1_bm67g"]
 [ext_resource type="Shader" path="res://scenes/explosion.gdshader" id="1_qynw2"]
@@ -16,10 +16,6 @@ gradient = SubResource("Gradient_p61os")
 resource_local_to_scene = true
 shader = ExtResource("1_qynw2")
 shader_parameter/palette = SubResource("GradientTexture1D_wkpqn")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_elvvb"]
-atlas = ExtResource("1_bm67g")
-region = Rect2(0, 0, 50, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iku1o"]
 atlas = ExtResource("1_bm67g")
@@ -68,9 +64,6 @@ region = Rect2(1100, 0, 50, 50)
 [sub_resource type="SpriteFrames" id="SpriteFrames_8htwc"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_elvvb")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iku1o")
 }, {
