@@ -157,6 +157,8 @@ func _on_game_use_brush(brush: String, mouse_posiiton: Vector2) -> void:
 	
 	is_destroying = true
 		
+	var first = true
+	
 	for group in groups:
 		await get_tree().process_frame
 		await get_tree().process_frame
@@ -164,15 +166,19 @@ func _on_game_use_brush(brush: String, mouse_posiiton: Vector2) -> void:
 		await get_tree().process_frame
 		await get_tree().process_frame
 		
+			
 		for cell in group:
 			var explosion = explosion_scene.instantiate()
 			var color = get_cell_atlas_coords(cell).x
 			add_destruction_points.emit(1.0, color)
 			points += 1.0
 			if color != -1:
-				add_child(explosion)
 				explosion.position = map_to_local(cell)
 				explosion.set_palette(color)
+				if brush != 'bulldozer' and first:
+					explosion.set_level(2)
+				add_child(explosion)
 				erase_cell(cell)
+		first = false
 	is_destroying = false
 	check_empty_map()
