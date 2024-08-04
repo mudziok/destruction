@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://csn00pe8lksd6"]
+[gd_scene load_steps=7 format=3 uid="uid://csn00pe8lksd6"]
 
 [ext_resource type="PackedScene" uid="uid://ddr44wetit1rm" path="res://game.tscn" id="1_0eiag"]
 [ext_resource type="Shader" path="res://ui.gdshader" id="2_br3mh"]
 [ext_resource type="PackedScene" uid="uid://cfmytruokew5u" path="res://scenes/ui.tscn" id="2_r0cj6"]
 [ext_resource type="Script" path="res://flashbang.gd" id="4_e1ut7"]
+[ext_resource type="AudioStream" uid="uid://dhwq6hocco6nq" path="res://banger_final_for_real_this_time.ogg" id="5_x7c5t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8viwh"]
 shader = ExtResource("2_br3mh")
@@ -61,6 +62,12 @@ offset_bottom = 744.0
 mouse_filter = 2
 color = Color(0.0627451, 0.0862745, 0.109804, 1)
 script = ExtResource("4_e1ut7")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_x7c5t")
+volume_db = -7.496
+autoplay = true
+parameters/looping = true
 
 [connection signal="add_points" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_add_points"]
 [connection signal="round_start" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_round_start"]
