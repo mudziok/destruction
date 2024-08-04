@@ -32,4 +32,5 @@ func _on_timer_timeout() -> void:
 
 
 func _on_pressed() -> void:
+	get_node("AudioStreamPlayer").play()
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)

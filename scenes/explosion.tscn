@@ -239,6 +239,6 @@ script = ExtResource("2_w0of6")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_hxsca")
-volume_db = -38.042
+volume_db = -26.799
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
