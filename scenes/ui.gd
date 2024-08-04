@@ -85,5 +85,6 @@ func _on_rockets_pressed() -> void:
 		use_brush.emit('rockets', mouse_position)
 
 func _on_time_pressed() -> void:
-	bomb.add_time()
-	$DestructionPoints.remove_points(brushes['time'].cost)
+	if brushes['time'].can_demolish():
+		bomb.add_time()
+		$DestructionPoints.remove_points(brushes['time'].cost)
