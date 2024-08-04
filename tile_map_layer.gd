@@ -147,11 +147,10 @@ func _on_game_use_brush(brush: String, mouse_posiiton: Vector2) -> void:
 	var mouse_position = get_local_mouse_position()
 	var removed_cell = local_to_map(mouse_position)
 	
-	if get_cell_atlas_coords(removed_cell).x == -1:
+	if get_cell_atlas_coords(removed_cell).x == -1 and brush != 'rockets':
 		return
 			
 	can_destroy = false
-		
 	var groups = []
 	if brush == 'bulldozer':
 		groups = get_surroundings_of_color([removed_cell])

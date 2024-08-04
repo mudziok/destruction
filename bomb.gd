@@ -12,6 +12,7 @@ var stopped = false
 var t = 0
 
 func put_out():
+	$AudioStreamPlayer.stop()
 	stopped = true
 	var size = fuse.points.size()
 	deadSpark.position = fuse.points[size - 1]
@@ -24,6 +25,9 @@ func add_time():
 	var target_point = fuse.points[size - 2]
 	
 	fuse.points[size - 1] = current_point + target_point.direction_to(current_point) * 20.0
+
+func _ready() -> void:
+	$AudioStreamPlayer.play()
 
 func _process(delta: float) -> void:
 	

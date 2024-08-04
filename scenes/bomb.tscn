@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlsh6eupft7tc"]
+[gd_scene load_steps=4 format=3 uid="uid://dlsh6eupft7tc"]
 
 [ext_resource type="Texture2D" uid="uid://crcw1qe1wmeyr" path="res://sprites/bomb.png" id="1_mrj7i"]
 [ext_resource type="Script" path="res://bomb.gd" id="2_qcixj"]
+[ext_resource type="AudioStream" uid="uid://d06no0fp5f53" path="res://713344__maximumplay3r__fuse-ignition.ogg" id="3_22qxs"]
 
 [node name="Bomb" type="Sprite2D"]
 texture_filter = 1
@@ -42,3 +43,7 @@ initial_velocity_max = 67.8
 scale_amount_min = 2.0
 scale_amount_max = 4.0
 color = Color(0.176419, 0.176419, 0.176419, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_22qxs")
+volume_db = -26.05
