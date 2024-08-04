@@ -1,9 +1,113 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfmytruokew5u"]
+[gd_scene load_steps=17 format=3 uid="uid://cfmytruokew5u"]
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_66jpf"]
+[ext_resource type="Texture2D" uid="uid://ldsw7bpmogg3" path="res://sprites/pink_palette.png" id="2_a6t12"]
+[ext_resource type="Script" path="res://scenes/destruction_points.gd" id="2_cvb26"]
+[ext_resource type="Shader" path="res://scenes/shop_item.gdshader" id="3_0hply"]
+[ext_resource type="PackedScene" uid="uid://e3cvdedjjmx" path="res://scenes/shop_item.tscn" id="3_ykfnh"]
+[ext_resource type="Shader" path="res://scenes/progress_fluid.gdshader" id="6_0guhv"]
+[ext_resource type="Shader" path="res://scenes/bars.gdshader" id="6_g8p46"]
+[ext_resource type="Texture2D" uid="uid://dtwx2j4jxfy85" path="res://sprites/bars.png" id="6_jayf1"]
+[ext_resource type="Texture2D" uid="uid://blfo102oxqyll" path="res://sprites/bar_stretch.png" id="6_rjcay"]
+[ext_resource type="Texture2D" uid="uid://gquwaw4xrwwj" path="res://sprites/bar_stretch-fluidt.png" id="7_mv6vh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ine8p"]
+shader = ExtResource("6_0guhv")
+shader_parameter/progress = 0.261
+shader_parameter/bg_color = null
+shader_parameter/wave_1_color = Color(0.92, 0.2576, 0.46736, 1)
+shader_parameter/wave_2_color = Color(0.87002, 0.649101, 0.72619, 1)
+shader_parameter/wave_1_speed = -1.0
+shader_parameter/wave_2_speed = 1.0
+shader_parameter/mask = ExtResource("7_mv6vh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v188h"]
+shader = ExtResource("6_g8p46")
+shader_parameter/scale_y = 1.0
+shader_parameter/mask = ExtResource("7_mv6vh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h1hyp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dmpgd"]
+resource_local_to_scene = true
+shader = ExtResource("3_0hply")
+shader_parameter/cooldown = 1.0
+shader_parameter/gray_out = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8onra"]
+resource_local_to_scene = true
+shader = ExtResource("3_0hply")
+shader_parameter/cooldown = 1.0
+shader_parameter/gray_out = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d6hgf"]
+resource_local_to_scene = true
+shader = ExtResource("3_0hply")
+shader_parameter/cooldown = 1.0
+shader_parameter/gray_out = 0.0
 
 [node name="UI" type="Node2D"]
 script = ExtResource("1_66jpf")
 
 [node name="BombSlot" type="Node2D" parent="."]
 position = Vector2(247, 130)
+
+[node name="Shop" type="Node2D" parent="."]
+
+[node name="DestructionPoints" type="TextureProgressBar" parent="."]
+material = SubResource("ShaderMaterial_ine8p")
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 58.0
+offset_bottom = 138.0
+value = 100.0
+allow_greater = true
+allow_lesser = true
+fill_mode = 3
+nine_patch_stretch = true
+texture_progress = ExtResource("2_a6t12")
+script = ExtResource("2_cvb26")
+
+[node name="Bars" type="Sprite2D" parent="DestructionPoints"]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_v188h")
+texture = ExtResource("6_jayf1")
+centered = false
+
+[node name="BarStretch" type="Sprite2D" parent="DestructionPoints"]
+material = SubResource("ShaderMaterial_h1hyp")
+texture = ExtResource("6_rjcay")
+centered = false
+
+[node name="Cross" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
+material = SubResource("ShaderMaterial_dmpgd")
+layout_mode = 0
+offset_left = 40.0
+offset_top = -10.0
+offset_right = 76.0
+offset_bottom = 14.0
+cost = 150
+wait_time = 3.0
+
+[node name="Meteorite" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
+material = SubResource("ShaderMaterial_8onra")
+layout_mode = 0
+offset_left = 40.0
+offset_top = 120.0
+offset_right = 64.0
+offset_bottom = 144.0
+cost = 100
+wait_time = 2.0
+
+[node name="Bulldozer" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
+material = SubResource("ShaderMaterial_d6hgf")
+layout_mode = 0
+offset_left = 40.0
+offset_top = -10.0
+offset_right = 76.0
+offset_bottom = 14.0
+
+[connection signal="toggled" from="DestructionPoints/Cross" to="." method="_on_cross_toggled"]
+[connection signal="toggled" from="DestructionPoints/Meteorite" to="." method="_on_meteorite_toggled"]
+[connection signal="toggled" from="DestructionPoints/Bulldozer" to="." method="_on_bulldozer_toggled"]

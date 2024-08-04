@@ -2,8 +2,11 @@ extends TileMapLayer
 
 signal map_cleared()
 signal add_destruction_points(points, color)
+signal use_points(points: int)
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
+var brush = 'bulldozer'
+var points = 0
 
 func get_points_in_radius(center: Vector2i, radius: float) -> Array:
 	var points_in_radius = []
@@ -82,16 +85,21 @@ func get_surrounding_cells_full(cell: Vector2i):
 		Vector2(cell.x - 1, cell.y + 1),
 	]
 	return surrounding_cells
-	
 
-func get_surroundings_of_color(starting_cell: Vector2i):
-	var queue = [starting_cell]
+func get_cross(cell: Vector2i):
+	var cells = []
+	for x in range(-5, 5):
+		cells.append(Vector2i(cell.x + x, cell.y))
+	for y in range(-5, 5):
+		cells.append(Vector2i(cell.x, cell.y + y))
+	return cells
+
+func get_surroundings_of_color(starting_cells: Array):
+	var queue = starting_cells.duplicate()
 	var visited_levels = []
-	var visited_cells = [starting_cell]
+	var visited_cells = starting_cells.duplicate()
 	var currently_visited_level = []
 	currently_visited_level.append_array(queue)
-	
-	var starting_atlas_coords = get_cell_atlas_coords(starting_cell)
 	
 	while queue.size() > 0:
 		var level_size = queue.size()
@@ -115,42 +123,6 @@ func get_surroundings_of_color(starting_cell: Vector2i):
 var can_destroy = true
 var is_destroying = false
 
-func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("lmb") and can_destroy:
-		var mouse_position = get_local_mouse_position()
-		var removed_cell = local_to_map(mouse_position)
-		
-		if get_cell_atlas_coords(removed_cell).x == -1:
-			return
-			
-		can_destroy = false
-		$DestroyTimer.wait_time = 1.5
-		$DestroyTimer.start()
-		
-		var groups = get_surroundings_of_color(removed_cell)
-		
-		is_destroying = true
-		
-		for group in groups:
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			await get_tree().process_frame
-			for cell in group:
-				var explosion = explosion_scene.instantiate()
-				var color = get_cell_atlas_coords(cell).x
-				if color != -1:
-					add_child(explosion)
-					explosion.position = map_to_local(cell)
-					explosion.set_palette(color)
-					erase_cell(cell)
-		is_destroying = false
-		check_empty_map()
-
-func _process(delta: float) -> void:
-	$"../Gimball/Label2".text = "%.02f" % $DestroyTimer.time_left
-
 func _on_timer_timeout() -> void:
 	for i in range(5):
 		grow()
@@ -158,5 +130,48 @@ func _on_timer_timeout() -> void:
 func _on_round_manager_start_round(radius: int) -> void:
 	generate_city(radius)
 
-func _on_destroy_timer_timeout() -> void:
-	can_destroy = true
+func _on_game_change_brush(new_brush: Variant) -> void:
+	print(new_brush)
+	brush = new_brush
+
+
+func _on_game_use_brush(brush: String, mouse_posiiton: Vector2) -> void:
+	var mouse_position = get_local_mouse_position()
+	var removed_cell = local_to_map(mouse_position)
+	
+	if get_cell_atlas_coords(removed_cell).x == -1:
+		return
+			
+	can_destroy = false
+		
+	var groups = []
+	if brush == 'bulldozer':
+		groups = get_surroundings_of_color([removed_cell])
+	elif brush == 'meteorite':
+		groups = get_surroundings_of_color(get_surrounding_cells_full(removed_cell))
+	elif brush == 'cross':
+		groups = get_surroundings_of_color(get_cross(removed_cell))
+	
+	use_points.emit(1)
+	
+	is_destroying = true
+		
+	for group in groups:
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		
+		for cell in group:
+			var explosion = explosion_scene.instantiate()
+			var color = get_cell_atlas_coords(cell).x
+			add_destruction_points.emit(1.0, color)
+			points += 1.0
+			if color != -1:
+				add_child(explosion)
+				explosion.position = map_to_local(cell)
+				explosion.set_palette(color)
+				erase_cell(cell)
+	is_destroying = false
+	check_empty_map()

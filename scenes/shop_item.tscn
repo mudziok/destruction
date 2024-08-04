@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://e3cvdedjjmx"]
+
+[ext_resource type="Shader" path="res://scenes/shop_item.gdshader" id="1_h6e3w"]
+[ext_resource type="Script" path="res://scenes/power_up.gd" id="2_au26n"]
+[ext_resource type="Texture2D" uid="uid://cojndhgwl6dsf" path="res://sprites/shop_item.png" id="2_nb60v"]
+[ext_resource type="Texture2D" uid="uid://d0pswgivi6mr" path="res://sprites/shop_item_toggled.png" id="3_mumri"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71sgw"]
+resource_local_to_scene = true
+shader = ExtResource("1_h6e3w")
+shader_parameter/cooldown = 1.0
+shader_parameter/gray_out = 0.0
+
+[node name="Bulldozer" type="TextureButton"]
+material = SubResource("ShaderMaterial_71sgw")
+offset_right = 24.0
+offset_bottom = 24.0
+toggle_mode = true
+texture_normal = ExtResource("2_nb60v")
+texture_pressed = ExtResource("3_mumri")
+script = ExtResource("2_au26n")
+cost = 0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
