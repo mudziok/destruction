@@ -18,13 +18,19 @@ func _process(delta: float) -> void:
 	patch.position = lerp(patch.position, destination_position, 0.2)
 	patch.size = lerp(patch.size, destination_size, 0.2)
 
+var in_game = false
 func request_new_round():
-	await get_tree().create_timer(1.0).timeout	
+	await get_tree().create_timer(1.0).timeout
+	in_game = true
 	start_round.emit(current_radius)
 
 var grow = 0
 
 func _on_map_map_cleared() -> void:
+	if not in_game:
+		return
+	in_game = false
+	
 	round_won.emit()
 	await get_tree().create_timer(3.0).timeout
 	current_radius += 0.5
@@ -47,4 +53,7 @@ func _on_map_map_cleared() -> void:
 
 
 func _on_game_round_lost() -> void:
+	if not in_game:
+		return
+	in_game = false
 	request_new_round()
