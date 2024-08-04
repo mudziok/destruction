@@ -55,18 +55,22 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 2
 
 [node name="Label" type="Label" parent="RoundManager/NinePatchRect"]
-layout_mode = 0
-offset_top = -6.0
-offset_right = 50.0
+layout_mode = 1
+offset_top = -25.0
+offset_right = 143.0
+offset_bottom = -2.0
 theme_override_colors/font_color = Color(0.294118, 0.294118, 0.380392, 1)
 theme_override_fonts/font = ExtResource("5_xn3yh")
 theme_override_font_sizes/font_size = 5
-text = "radius 3.0"
+text = "radius 3.0
+click on buildings
+to destroy them
+"
+vertical_alignment = 2
 
 [node name="Map" type="TileMapLayer" parent="."]
 y_sort_enabled = true
 texture_filter = 1
-tile_map_data = PackedByteArray(0, 0, 255, 255, 254, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_g3aor")
 script = ExtResource("2_6rhak")
 

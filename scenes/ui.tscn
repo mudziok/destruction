@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cfmytruokew5u"]
+[gd_scene load_steps=28 format=3 uid="uid://cfmytruokew5u"]
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_66jpf"]
 [ext_resource type="Script" path="res://scenes/destruction_points.gd" id="2_cvb26"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dk33olw2vke6y" path="res://sprites/bulldozer.png" id="10_mfb00"]
 [ext_resource type="Texture2D" uid="uid://te6buu36cmcv" path="res://sprites/cross.png" id="10_n74h0"]
 [ext_resource type="Texture2D" uid="uid://cfhyffm6rblqp" path="res://sprites/dynamite.png" id="11_faumu"]
+[ext_resource type="Texture2D" uid="uid://dfosortvdjuc4" path="res://sprites/rockets.png" id="11_iljre"]
 [ext_resource type="Texture2D" uid="uid://blrcinf8trjtd" path="res://sprites/cursor.png" id="13_qr5w6"]
 [ext_resource type="Script" path="res://scenes/cursor.gd" id="14_tj6bn"]
 [ext_resource type="Texture2D" uid="uid://c61ppmfgtyvq4" path="res://sprites/cooldown.png" id="15_gdg51"]
@@ -51,6 +52,12 @@ shader_parameter/mask = ExtResource("7_mv6vh")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h1hyp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dmpgd"]
+resource_local_to_scene = true
+shader = ExtResource("3_0hply")
+shader_parameter/cooldown = 1.0
+shader_parameter/gray_out = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ad2rv"]
 resource_local_to_scene = true
 shader = ExtResource("3_0hply")
 shader_parameter/cooldown = 1.0
@@ -97,7 +104,7 @@ material = SubResource("ShaderMaterial_dmpgd")
 layout_mode = 0
 offset_left = 57.0
 offset_top = -49.0
-offset_right = 93.0
+offset_right = 81.0
 offset_bottom = -25.0
 cost = 150
 wait_time = 3.0
@@ -105,6 +112,22 @@ wait_time = 3.0
 [node name="Cross2" type="Sprite2D" parent="DestructionPoints/Cross"]
 position = Vector2(3, 3)
 texture = ExtResource("10_n74h0")
+centered = false
+
+[node name="Rockets" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
+material = SubResource("ShaderMaterial_ad2rv")
+layout_mode = 0
+offset_left = 57.0
+offset_top = -83.0
+offset_right = 81.0
+offset_bottom = -59.0
+toggle_mode = false
+cost = 200
+wait_time = 5.0
+
+[node name="Rockets" type="Sprite2D" parent="DestructionPoints/Rockets"]
+position = Vector2(3, 3)
+texture = ExtResource("11_iljre")
 centered = false
 
 [node name="Meteorite" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
@@ -127,7 +150,7 @@ material = SubResource("ShaderMaterial_d6hgf")
 layout_mode = 0
 offset_left = 44.0
 offset_top = 115.0
-offset_right = 80.0
+offset_right = 68.0
 offset_bottom = 139.0
 
 [node name="Bulldozer" type="Sprite2D" parent="DestructionPoints/Bulldozer"]
@@ -169,5 +192,6 @@ position = Vector2(19, 18)
 texture = ExtResource("15_gdg51")
 
 [connection signal="toggled" from="DestructionPoints/Cross" to="." method="_on_cross_toggled"]
+[connection signal="pressed" from="DestructionPoints/Rockets" to="." method="_on_rockets_pressed"]
 [connection signal="toggled" from="DestructionPoints/Meteorite" to="." method="_on_meteorite_toggled"]
 [connection signal="toggled" from="DestructionPoints/Bulldozer" to="." method="_on_bulldozer_toggled"]
