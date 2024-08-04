@@ -45,9 +45,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			use_brush.emit(brush, mouse_position)
 
 func _process(_delta):
-	var cursor = brush
-	if brushes.has(brush) and not brushes[brush].can_demolish():
-		cursor = 'none'
+	var hint = brush
+	if brushes.has(brush):
+		if brushes[brush].is_on_cooldown:
+			hint = 'cooldown'
+		if not brushes[brush].is_purchasable:
+			hint = 'none'
+	$Cursor.change_cursor(hint)
 
 func untoggle_all(mask: String):
 	for b in brushes:

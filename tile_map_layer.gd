@@ -28,7 +28,7 @@ const fill_percent = 0.5
 var generation_radius = 0
 func generate_city(radius: int) -> void:
 	generation_radius = radius
-	var roots = get_points_in_radius(Vector2i.ZERO, radius)
+	var roots = get_points_in_radius(Vector2i.ZERO, radius - 0.5)
 	for cell in roots:
 		erase_cell(cell)
 	

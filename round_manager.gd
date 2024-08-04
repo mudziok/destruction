@@ -5,7 +5,7 @@ extends Node
 signal start_round(radius: int)
 signal round_won
 
-var current_radius = 8.0
+var current_radius = 3.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

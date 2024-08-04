@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8viwh"]
 shader = ExtResource("2_br3mh")
-shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0.843184, 0.843184, 0.843184, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3

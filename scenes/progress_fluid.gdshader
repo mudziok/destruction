@@ -26,11 +26,12 @@ shader_type canvas_item;
 
 uniform float progress: hint_range(0.0, 1.0) = 0.5;
 uniform vec4 bg_color: source_color;
-uniform vec4 wave_1_color: source_color;
 uniform vec4 wave_2_color: source_color;
 uniform float wave_1_speed = -1.0;
 uniform float wave_2_speed = 1.0;
 uniform sampler2D mask;
+uniform sampler2D noise;
+uniform sampler2D color_map;
 
 vec4 wave( vec2 uv, vec4 wave_color, float level, float freq, float amp, float sin_shift, float speed ){
 	float sinus = sin( (uv.x + sin_shift + TIME * speed) * freq) * amp;
@@ -40,9 +41,10 @@ vec4 wave( vec2 uv, vec4 wave_color, float level, float freq, float amp, float s
 }
 
 void fragment() {
-	
-	vec4 wave1 = wave(UV, wave_1_color, progress, 2.5, 0.1, 0.0, wave_1_speed);
-	vec4 wave2 = wave(UV, wave_2_color, progress, 2.0, 0.05, 0.7785*TIME, wave_2_speed);
+	vec4 wave_noise = texture(noise, vec2(fract(UV.x + TIME * 0.2), fract(UV.y)));
+	vec4 wave_color = texture(color_map, vec2(fract(UV.y * 10.0 - UV.x + wave_noise.r * 0.2), 0.5));
+	vec4 wave1 = wave(UV, wave_color * 0.9, progress, 2.5, 0.05, 0.0, wave_1_speed);
+	vec4 wave2 = wave(UV, wave_color, progress, 2.0, 0.02, 0.7785*TIME, wave_2_speed);
 	
 	vec4 combined_waves = mix(wave1, wave2, wave2.a);
 	vec3 col = mix( bg_color, combined_waves, combined_waves.a ).rgb;

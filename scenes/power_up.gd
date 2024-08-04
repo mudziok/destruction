@@ -24,7 +24,12 @@ func _process(delta: float) -> void:
 		material.set_shader_parameter('cooldown', 1.0 - $Timer.time_left / wait_time)
 		material.set_shader_parameter('gray_out', 0.0 if is_purchasable else 0.5)
 	
-	position.y = lerp(position.y, (1.0 - cost/max_value) * 120.0, delta * 2.0)
+	position.y = lerp(position.y, (1.0 - cost/max_value) * 120.0 - 5, delta * 2.0)
+	position.x = lerp(position.x,  55.0 - (1.0 - cost/max_value) * 15.0, delta * 2.0)
 
 func _on_timer_timeout() -> void:
 	is_on_cooldown = false
+
+
+func _on_pressed() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
