@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://csn00pe8lksd6"]
+[gd_scene load_steps=6 format=3 uid="uid://csn00pe8lksd6"]
 
 [ext_resource type="PackedScene" uid="uid://ddr44wetit1rm" path="res://game.tscn" id="1_0eiag"]
 [ext_resource type="Shader" path="res://ui.gdshader" id="2_br3mh"]
 [ext_resource type="PackedScene" uid="uid://cfmytruokew5u" path="res://scenes/ui.tscn" id="2_r0cj6"]
+[ext_resource type="Script" path="res://flashbang.gd" id="4_e1ut7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8viwh"]
 shader = ExtResource("2_br3mh")
@@ -50,10 +51,22 @@ render_target_update_mode = 4
 
 [node name="UI" parent="UIViewport/SubViewport" instance=ExtResource("2_r0cj6")]
 
+[node name="Flashbang" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -147.0
+offset_top = -86.0
+offset_right = 1286.0
+offset_bottom = 744.0
+mouse_filter = 2
+color = Color(0.0627451, 0.0862745, 0.109804, 1)
+script = ExtResource("4_e1ut7")
+
 [connection signal="add_points" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_add_points"]
 [connection signal="round_start" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_round_start"]
 [connection signal="round_won" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_round_won"]
 [connection signal="use_points" from="SubViewportContainer/SubViewport/Game" to="UIViewport/SubViewport/UI" method="_on_game_use_points"]
 [connection signal="bomb_timeout" from="UIViewport/SubViewport/UI" to="SubViewportContainer/SubViewport/Game" method="_on_ui_bomb_timeout"]
+[connection signal="bomb_timeout" from="UIViewport/SubViewport/UI" to="Flashbang" method="_on_ui_bomb_timeout"]
 [connection signal="buy_power_up" from="UIViewport/SubViewport/UI" to="SubViewportContainer/SubViewport/Game" method="_on_ui_buy_power_up"]
 [connection signal="use_brush" from="UIViewport/SubViewport/UI" to="SubViewportContainer/SubViewport/Game" method="_on_ui_use_brush"]

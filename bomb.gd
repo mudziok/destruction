@@ -30,6 +30,8 @@ func _process(delta: float) -> void:
 		if not done:
 			done = true
 			exploded.emit()
+			queue_free()
+			
 		return
 		
 	if stopped:

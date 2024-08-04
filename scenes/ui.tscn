@@ -71,11 +71,6 @@ shader_parameter/gray_out = 0.0
 [node name="UI" type="Node2D"]
 script = ExtResource("1_66jpf")
 
-[node name="BombSlot" type="Node2D" parent="."]
-position = Vector2(247, 130)
-
-[node name="Shop" type="Node2D" parent="."]
-
 [node name="DestructionPoints" type="ColorRect" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_ine8p")
@@ -140,6 +135,11 @@ texture_filter = 1
 position = Vector2(3, 3)
 texture = ExtResource("10_mfb00")
 centered = false
+
+[node name="Shop" type="Node2D" parent="."]
+
+[node name="BombSlot" type="Node2D" parent="."]
+position = Vector2(247, 130)
 
 [node name="Cursor" type="Sprite2D" parent="."]
 texture_filter = 1

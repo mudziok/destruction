@@ -6,6 +6,7 @@ signal add_points(points: int, color: int)
 signal use_points(points: int)
 signal change_brush(brush)
 signal use_brush(brush: String, mouse_posiiton: Vector2)
+signal round_lost()
 
 func _on_bomb_timer_timeout():
 	pass
@@ -17,8 +18,7 @@ func _on_round_manager_round_won() -> void:
 	round_won.emit()
 
 func _on_ui_bomb_timeout() -> void:
-	pass # Replace with function body.
-
+	round_lost.emit()
 
 func _on_map_add_destruction_points(points: Variant, color: Variant) -> void:
 	add_points.emit(points, color)

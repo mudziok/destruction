@@ -13,7 +13,7 @@ var scale_y = 1.0
 
 func _process(delta: float) -> void:
 	if destination_value < value:
-		value = destination_value
+		value = lerp(value, destination_value, delta * 10.0)
 	else:
 		value = lerp(value, destination_value, delta * 5.0)
 	scale_y = (max_value / 100.0)

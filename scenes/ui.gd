@@ -24,6 +24,7 @@ func bomb_exploded():
 
 func _on_game_round_start() -> void:
 	start_fuse()
+	$DestructionPoints.destination_value = 0.0
 
 func _on_game_round_won() -> void:
 	$BombSlot.get_child(0).put_out()

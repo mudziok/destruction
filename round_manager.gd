@@ -23,13 +23,19 @@ func request_new_round():
 	start_round.emit(current_radius)
 
 var grow = 0
+
 func _on_map_map_cleared() -> void:
 	round_won.emit()
 	await get_tree().create_timer(3.0).timeout
 	current_radius += 0.5
+	$NinePatchRect/Label.text = "radius " + "%.02f" % current_radius
 	grow += 1
 	if grow == 4:
 		grow = 0
 		destination_position -= Vector2(16.0, 16.0)
 		destination_size += Vector2(32.0, 32.0)
+	request_new_round()
+
+
+func _on_game_round_lost() -> void:
 	request_new_round()
