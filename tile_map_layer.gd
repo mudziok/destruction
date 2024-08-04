@@ -2,7 +2,7 @@ extends TileMapLayer
 
 signal map_cleared()
 signal add_destruction_points(points, color)
-signal use_points(points: int)
+signal use_points(points: int, brush: String)
 
 var explosion_scene = preload("res://scenes/explosion.tscn")
 var brush = 'bulldozer'
@@ -135,6 +135,13 @@ func _on_game_change_brush(new_brush: Variant) -> void:
 	print(new_brush)
 	brush = new_brush
 
+func get_random_cells(num: int):
+	var cells = get_used_cells()
+	cells.shuffle()
+	var selected_cells = []
+	for i in range(num):
+		selected_cells.append(cells.pick_random())
+	return selected_cells
 
 func _on_game_use_brush(brush: String, mouse_posiiton: Vector2) -> void:
 	var mouse_position = get_local_mouse_position()
@@ -152,8 +159,10 @@ func _on_game_use_brush(brush: String, mouse_posiiton: Vector2) -> void:
 		groups = get_surroundings_of_color(get_surrounding_cells_full(removed_cell))
 	elif brush == 'cross':
 		groups = get_surroundings_of_color(get_cross(removed_cell))
+	elif brush == 'rockets':
+		groups = get_surroundings_of_color(get_random_cells(5))
 	
-	use_points.emit(1)
+	use_points.emit(1, brush)
 	
 	is_destroying = true
 		

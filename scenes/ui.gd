@@ -11,7 +11,8 @@ var brush = 'none'
 @onready var brushes = {
 	'bulldozer': $DestructionPoints/Bulldozer,
 	'meteorite': $DestructionPoints/Meteorite,
-	'cross': $DestructionPoints/Cross
+	'cross': $DestructionPoints/Cross,
+	'rockets': $DestructionPoints/Rockets
 }
 
 func start_fuse():
@@ -25,6 +26,7 @@ func bomb_exploded():
 func _on_game_round_start() -> void:
 	start_fuse()
 	$DestructionPoints.destination_value = 0.0
+	$DestructionPoints/Bulldozer.button_pressed = true
 
 func _on_game_round_won() -> void:
 	$BombSlot.get_child(0).put_out()
@@ -35,7 +37,7 @@ func _on_game_round_won() -> void:
 func _on_game_add_points(points: int, color: int) -> void:
 	$DestructionPoints.add_points(points, color)
 
-func _on_game_use_points(points: int) -> void:
+func _on_game_use_points(points: int, brush: String) -> void:
 	brushes[brush].use()
 	$DestructionPoints.remove_points(brushes[brush].cost)
 
@@ -69,8 +71,12 @@ func _on_meteorite_toggled(toggled_on: bool) -> void:
 		untoggle_all('meteorite')
 		brush = 'meteorite'
 
-
 func _on_cross_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		untoggle_all('cross')
 		brush = 'cross'
+
+func _on_rockets_pressed() -> void:
+	if brushes['rockets'].can_demolish():
+		var mouse_position = get_local_mouse_position()
+		use_brush.emit('rockets', mouse_position)

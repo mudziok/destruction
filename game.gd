@@ -3,7 +3,7 @@ extends Node2D
 signal round_start
 signal round_won
 signal add_points(points: int, color: int)
-signal use_points(points: int)
+signal use_points(points: int, brush: String)
 signal change_brush(brush)
 signal use_brush(brush: String, mouse_posiiton: Vector2)
 signal round_lost()
@@ -26,8 +26,8 @@ func _on_map_add_destruction_points(points: Variant, color: Variant) -> void:
 func _on_ui_buy_power_up(name: String) -> void:
 	change_brush.emit(name)
 
-func _on_map_use_points(points: int) -> void:
-	use_points.emit(points)
+func _on_map_use_points(points: int, brush) -> void:
+	use_points.emit(points, brush)
 
 func _on_ui_use_brush(name: String, mouse_position: Vector2) -> void:
 	use_brush.emit(name, mouse_position)
