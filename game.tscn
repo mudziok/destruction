@@ -1,11 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://ddr44wetit1rm"]
+[gd_scene load_steps=11 format=3 uid="uid://ddr44wetit1rm"]
 
 [ext_resource type="Script" path="res://round_manager.gd" id="1_0s2bx"]
 [ext_resource type="Texture2D" uid="uid://daveui1y4amdc" path="res://sprites/houses_dark_windows.png" id="1_4q1uc"]
-[ext_resource type="Texture2D" uid="uid://dyfqgrwhn3wdp" path="res://sprites/bg.png" id="1_nvdk8"]
 [ext_resource type="Script" path="res://game.gd" id="1_vxhlw"]
 [ext_resource type="Script" path="res://tile_map_layer.gd" id="2_6rhak"]
+[ext_resource type="Shader" path="res://bg.gdshader" id="2_nse46"]
+[ext_resource type="Texture2D" uid="uid://5l2u8s7bjrob" path="res://sprites/bg_nine.png" id="3_7jesj"]
 [ext_resource type="Script" path="res://gimball.gd" id="4_drhe8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d38ur"]
+shader = ExtResource("2_nse46")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hkfhx"]
 texture = ExtResource("1_4q1uc")
@@ -29,20 +33,25 @@ sources/1 = SubResource("TileSetAtlasSource_hkfhx")
 [node name="Game" type="Node2D"]
 script = ExtResource("1_vxhlw")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-texture_filter = 1
-offset_left = -144.0
-offset_top = -96.0
-offset_right = 201.0
-offset_bottom = 130.0
-texture = ExtResource("1_nvdk8")
-stretch_mode = 1
-
-[node name="RoundManager" type="Node" parent="."]
+[node name="RoundManager" type="Node2D" parent="."]
 script = ExtResource("1_0s2bx")
 
 [node name="RoundTimer" type="Timer" parent="RoundManager"]
 wait_time = 60.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="RoundManager"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_d38ur")
+offset_left = -64.0
+offset_top = -32.0
+offset_right = 80.0
+offset_bottom = 96.0
+texture = ExtResource("3_7jesj")
+region_rect = Rect2(0, 0, 48, 80)
+patch_margin_top = 16
+patch_margin_bottom = 48
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 2
 
 [node name="Map" type="TileMapLayer" parent="."]
 y_sort_enabled = true

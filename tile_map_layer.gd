@@ -41,6 +41,7 @@ func generate_city(radius: int) -> void:
 	
 	for i in range(200):
 		grow()
+		await get_tree().process_frame
 
 func _ready() -> void:
 	randomize()
