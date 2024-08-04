@@ -17,6 +17,7 @@ func set_palette(color):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var player = get_node("AudioStreamPlayer")
+	player.pitch_scale = randf_range(0.8, 1.2)
 	player.play()
 	if level == 2:
 		play("level2")

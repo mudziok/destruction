@@ -130,6 +130,22 @@ position = Vector2(3, 3)
 texture = ExtResource("11_iljre")
 centered = false
 
+[node name="Time" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
+material = SubResource("ShaderMaterial_ad2rv")
+layout_mode = 0
+offset_left = 57.0
+offset_top = -83.0
+offset_right = 81.0
+offset_bottom = -59.0
+toggle_mode = false
+cost = 50
+wait_time = 2.0
+
+[node name="Time" type="Sprite2D" parent="DestructionPoints/Time"]
+position = Vector2(3, 3)
+texture = ExtResource("11_iljre")
+centered = false
+
 [node name="Meteorite" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
 material = SubResource("ShaderMaterial_8onra")
 layout_mode = 0
@@ -193,5 +209,6 @@ texture = ExtResource("15_gdg51")
 
 [connection signal="toggled" from="DestructionPoints/Cross" to="." method="_on_cross_toggled"]
 [connection signal="pressed" from="DestructionPoints/Rockets" to="." method="_on_rockets_pressed"]
+[connection signal="pressed" from="DestructionPoints/Time" to="." method="_on_time_pressed"]
 [connection signal="toggled" from="DestructionPoints/Meteorite" to="." method="_on_meteorite_toggled"]
 [connection signal="toggled" from="DestructionPoints/Bulldozer" to="." method="_on_bulldozer_toggled"]

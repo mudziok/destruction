@@ -6,7 +6,7 @@ signal exploded
 @onready var spark = $"Fuse/Spark"
 @onready var deadSpark = $"Fuse/DeadSpark"
 
-var speed = 2.0
+var speed = 0.2
 var done = false
 var stopped = false
 var t = 0
@@ -17,6 +17,13 @@ func put_out():
 	deadSpark.position = fuse.points[size - 1]
 	deadSpark.emitting = true
 	spark.emitting = false
+
+func add_time():
+	var size = fuse.points.size()
+	var current_point = fuse.points[size - 1]
+	var target_point = fuse.points[size - 2]
+	
+	fuse.points[size - 1] = current_point + target_point.direction_to(current_point) * 20.0
 
 func _process(delta: float) -> void:
 	
@@ -40,7 +47,7 @@ func _process(delta: float) -> void:
 	var current_point = fuse.points[size - 1]
 	var target_point = fuse.points[size - 2]
 	
-	fuse.points[size - 1] = lerp(current_point, target_point, delta * speed)
+	fuse.points[size - 1] = lerp(current_point, current_point + current_point.direction_to(target_point) * 20.0, delta * speed)
 	spark.position = fuse.points[size - 1]
 	if fuse.points[size - 1].distance_to(target_point) < 0.5:
 		fuse.points = fuse.points.slice(0, size - 1)

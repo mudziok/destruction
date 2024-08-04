@@ -15,8 +15,9 @@ var brush = 'none'
 	'rockets': $DestructionPoints/Rockets
 }
 
+var bomb = null
 func start_fuse():
-	var bomb = bomb_scene.instantiate()
+	bomb = bomb_scene.instantiate()
 	$BombSlot.add_child(bomb)
 	bomb.connect("exploded", bomb_exploded)
 
@@ -80,3 +81,6 @@ func _on_rockets_pressed() -> void:
 	if brushes['rockets'].can_demolish():
 		var mouse_position = get_local_mouse_position()
 		use_brush.emit('rockets', mouse_position)
+
+func _on_time_pressed() -> void:
+	bomb.add_time()
