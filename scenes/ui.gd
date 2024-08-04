@@ -12,7 +12,8 @@ var brush = 'none'
 	'bulldozer': $DestructionPoints/Bulldozer,
 	'meteorite': $DestructionPoints/Meteorite,
 	'cross': $DestructionPoints/Cross,
-	'rockets': $DestructionPoints/Rockets
+	'rockets': $DestructionPoints/Rockets,
+	'time': $DestructionPoints/Time
 }
 
 var bomb = null
@@ -30,8 +31,9 @@ func _on_game_round_start() -> void:
 	$DestructionPoints/Bulldozer.button_pressed = true
 
 func _on_game_round_won() -> void:
-	$BombSlot.get_child(0).put_out()
-	
+	if $BombSlot.get_child_count() != 0:
+		$BombSlot.get_child(0).put_out()
+
 	await get_tree().create_timer(2.0).timeout
 	$BombSlot.get_child(0).queue_free()
 
@@ -84,3 +86,4 @@ func _on_rockets_pressed() -> void:
 
 func _on_time_pressed() -> void:
 	bomb.add_time()
+	$DestructionPoints.remove_points(brushes['time'].cost)

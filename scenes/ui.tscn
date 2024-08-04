@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cfmytruokew5u"]
+[gd_scene load_steps=29 format=3 uid="uid://cfmytruokew5u"]
 
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_66jpf"]
 [ext_resource type="Script" path="res://scenes/destruction_points.gd" id="2_cvb26"]
@@ -58,6 +58,12 @@ shader_parameter/cooldown = 1.0
 shader_parameter/gray_out = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ad2rv"]
+resource_local_to_scene = true
+shader = ExtResource("3_0hply")
+shader_parameter/cooldown = 1.0
+shader_parameter/gray_out = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cdcng"]
 resource_local_to_scene = true
 shader = ExtResource("3_0hply")
 shader_parameter/cooldown = 1.0
@@ -131,19 +137,19 @@ texture = ExtResource("11_iljre")
 centered = false
 
 [node name="Time" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
-material = SubResource("ShaderMaterial_ad2rv")
+material = SubResource("ShaderMaterial_cdcng")
 layout_mode = 0
-offset_left = 57.0
-offset_top = -83.0
-offset_right = 81.0
-offset_bottom = -59.0
+offset_left = 74.0
+offset_top = -111.0
+offset_right = 98.0
+offset_bottom = -87.0
 toggle_mode = false
-cost = 50
-wait_time = 2.0
+cost = 250
+wait_time = 10.0
 
-[node name="Time" type="Sprite2D" parent="DestructionPoints/Time"]
+[node name="Cooldown" type="Sprite2D" parent="DestructionPoints/Time"]
 position = Vector2(3, 3)
-texture = ExtResource("11_iljre")
+texture = ExtResource("15_gdg51")
 centered = false
 
 [node name="Meteorite" parent="DestructionPoints" instance=ExtResource("3_ykfnh")]
